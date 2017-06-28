@@ -38,6 +38,7 @@ db.init_app(app)
 @app.cli.command('initdb')
 def initdb_command():
 	"""Creates the database tables."""
+	db.drop_all()
 	db.create_all()
 	print('Initialized the database.')
 

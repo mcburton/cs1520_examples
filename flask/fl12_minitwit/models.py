@@ -10,7 +10,11 @@ class User(db.Model):
 
 	messages = db.relationship('Message', backref='author')
 
-	follows = db.relationship('User', secondary='follows', primaryjoin='User.user_id==follows.c.follower_id', secondaryjoin='User.user_id==follows.c.followee_id', backref=db.backref('followed_by', lazy='dynamic'), lazy='dynamic')
+	follows = db.relationship('User', secondary='follows', 
+	  primaryjoin='User.user_id==follows.c.follower_id', 
+	  secondaryjoin='User.user_id==follows.c.target_id', 
+	  backref=db.backref('followed_by', lazy='dynamic'), 
+	  lazy='dynamic')
 	
 	def __init__(self, username, email, pw_hash):
 		self.username = username
@@ -22,7 +26,7 @@ class User(db.Model):
 
 follows = db.Table('follows',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.user_id')),
-    db.Column('followee_id', db.Integer, db.ForeignKey('user.user_id'))
+    db.Column('target_id', db.Integer, db.ForeignKey('user.user_id'))
 )
 
 class Message(db.Model):

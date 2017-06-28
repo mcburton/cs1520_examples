@@ -114,13 +114,17 @@ def default():
 	displayResult(5, User.query.order_by(User.username).all())
 	displayResult(6, User.query.all())
 	displayResult(7, User.query.limit(1).all())
-	displayResult(8, User.query.get(1))
+	tmp = User.query.get(1)
+	displayResult(8, tmp)
+	print(tmp.id)
 	displayResult(9, User.query.filter(User.id < 3).all())
+	displayResult(10, User.query)
 
 	# 1-N example
 	print("\n\nperson:")
 	per = Person.query.first()
 	print("\tname:", per.name)
+	print("\taddresses object:", per.addresses)
 	print("\taddresses:")
 	for a in per.addresses:
 		print("\t\t", a.email)
