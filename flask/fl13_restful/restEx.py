@@ -1,11 +1,13 @@
 # Copyright 2015, Kevin Burke, Kyle Conroy, Ryan Horn, Frank Stratton, Guillaume Binet
 # Created as documentation for Flask-RESTful Flask extension
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import reqparse, abort, Api, Resource
 
 app = Flask(__name__)
 api = Api(app)
+
+app.config.update(dict(SEND_FILE_MAX_AGE_DEFAULT=0))
 
 TODOS = {
 	'todo1': {'task': 'build an API'},
@@ -21,6 +23,10 @@ def abort_if_todo_doesnt_exist(todo_id):
 parser = reqparse.RequestParser()
 parser.add_argument('task')
 
+
+@app.route("/")
+def root_page():
+	return render_template("homepage.html")
 
 # Todo
 # shows a single todo item and lets you delete a todo item
